@@ -39,6 +39,10 @@ const ReactHookForm = () => {
             value:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
             message:'Email is not valid'
           },
+          validate:{ 
+            notAdmin:(value) => value !== 'admin@gmail.com' || ' This email is not allowed',
+            notBlockListedDomain:(value) => !value.endsWith('tcs.com') || 'This domain is not allowed'
+          },
           required:'email is required'
         })} />
         <p className='error'>{errors.email?.message}</p> 
