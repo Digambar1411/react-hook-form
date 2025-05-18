@@ -14,7 +14,12 @@ const ReactHookForm = () => {
     control, 
     handleSubmit, 
     formState:{errors} 
-  } = useForm<SampleFormType>();
+  } = useForm<SampleFormType>({
+    defaultValues:{
+      username:'ca',
+      email:'vasvavs',
+      gender:''
+    }});
 
 
   const submitForm = (data: SampleFormType) => {
