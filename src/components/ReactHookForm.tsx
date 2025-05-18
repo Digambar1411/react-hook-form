@@ -15,16 +15,16 @@ const ReactHookForm = () => {
     handleSubmit, 
     formState:{errors} 
   } = useForm<SampleFormType>({
-    defaultValues:{
-      username:'ca',
-      email:'vasvavs',
-      gender:''
+    defaultValues:async () =>{
+      const data = await fetch('https://jsonplaceholder.typicode.com/users/1');
+      const json = await data.json();
+      return {username:json.username,email:json.email, gender:''}
     }});
-
 
   const submitForm = (data: SampleFormType) => {
     console.log(data);
   }
+
   return (
     <>
     <form onSubmit={handleSubmit(submitForm)} noValidate>
