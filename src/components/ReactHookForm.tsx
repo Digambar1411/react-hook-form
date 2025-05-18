@@ -33,7 +33,7 @@ const ReactHookForm = () => {
       <div className='section'>
         <label htmlFor="username">Username</label>
         <input type="text" placeholder='username' {...register('username',{required:'username is required'})}/>
-        <p className='error'>{errors.username?.message}</p> 
+        { errors.username && <p className='error'>{errors.username?.message}</p> }
       </div>
 
       <div className='section'>
@@ -50,12 +50,13 @@ const ReactHookForm = () => {
           },
           required:'email is required'
         })} />
-        <p className='error'>{errors.email?.message}</p> 
+        {errors.email && <p className='error'>{errors.email?.message}</p> }
 
       </div>
 
       <div className=''>
         <label htmlFor="gender">Gender</label>
+
         <div>
           <label htmlFor="male">Male</label>
           <input type="radio" id="male" value='male'  {...register('gender',{required:'gender is required'})}/>
@@ -68,6 +69,7 @@ const ReactHookForm = () => {
           <label htmlFor="other">other</label>
           <input type="radio" id="other" value='other'  {...register('gender',{required:'gender is required'}) } />
         </div>
+        {errors.gender && <p className='error'>{errors.gender?.message}</p> }
       </div>
 
       <button type="submit">Submit</button>
