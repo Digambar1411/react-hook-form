@@ -53,7 +53,10 @@ const ReactHookForm = () => {
 					<input
 						type="text"
 						placeholder="username"
-						{...register("username", { required: "username is required" })}
+						{...register("username", { 
+              validate: (value) => value !== "admin" || "This username is not allowed",
+              required: "username is required",
+            })}
 					/>
 					{errors.username && (
 						<p className="error">{errors.username?.message}</p>
@@ -75,6 +78,7 @@ const ReactHookForm = () => {
 									value !== "admin@gmail.com" || " This email is not allowed",
 								notBlockListedDomain: (value) =>
 									!value.endsWith("tcs.com") || "This domain is not allowed",
+                isSameOrg: (value) => value.endsWith('tcs-evms.com') || "Domain does not  match",
 							},
 							required: "email is required",
 						})}
