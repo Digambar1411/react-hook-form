@@ -9,20 +9,25 @@ type SampleFormType = {
     street:string;
     city:string;
   }
+  phoneNumbers:string[];
 }
 
 const ReactHookForm = () => {
-
   const { 
     register, 
     control, 
     handleSubmit, 
     formState:{errors} 
   } = useForm<SampleFormType>({
-    defaultValues:async () =>{
-      const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
-      const data = await response.json();
-      return {username:data.username,email:data.email, gender:'', address:{street:data.address.street,city:data.address.city}};
+    defaultValues:{
+      username:'',
+      email:'', 
+      gender:'', 
+      address:{
+        street:'',
+        city:''
+      },
+      phoneNumbers:['','']
     }});
 
   const submitForm = (data: SampleFormType) => {
@@ -75,23 +80,31 @@ const ReactHookForm = () => {
         </div>
           {errors.gender && <p className='error'>{errors.gender?.message}</p> }
 
-        <div className='section'>
-          <label htmlFor="street">Street</label>
-          <input type="text" id='street' {...register('address.street',{required:'street address is required'})} />
-          {errors.address?.street && <p className='error'>{errors.address.street?.message}</p> }
-        </div>
-        <div className='section'>
-          <label htmlFor="city">City</label>
-          <input type="text" id='city' {...register('address.city',{required:'city is required'})}/>
-          {errors.address?.city && <p className='error'>{errors.address.city?.message}</p> }
-        </div>
-      </div>
+          <div className='section'>
+            <label htmlFor="street">Street</label>
+            <input type="text" id='street' {...register('address.street',{required:'street address is required'})} />
+            {errors.address?.street && <p className='error'>{errors.address.street?.message}</p> }
+          </div>
+          <div className='section'>
+            <label htmlFor="city">City</label>
+            <input type="text" id='city' {...register('address.city',{required:'city is required'})}/>
+            {errors.address?.city && <p className='error'>{errors.address.city?.message}</p> }
+          </div>
+          <div className='section'>
+            <label htmlFor="primary-phone">Primary Phone</label>
+            <input type="number" id='phone1' {...register('phoneNumbers.0',{required:'primary phone is required'})}/>
+          </div>
 
-      <button type="submit">Submit</button>
-    </form>
-    <DevTool control={control} /> {/* Set up the dev tool */}
+          <div className='section'>
+            <label htmlFor="secondary-phone" >Secondary Phone</label>
+            <input type="number" id='phone2' {...register('phoneNumbers.1')}/>
+          </div>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+      <DevTool control={control} /> {/* Set up the dev tool */}
     </>
-
   )
 }
 
