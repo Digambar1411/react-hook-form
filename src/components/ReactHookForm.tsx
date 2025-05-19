@@ -115,9 +115,7 @@ const ReactHookForm = () => {
                   <div key={field.id}>
                     <input 
                       type="text" 
-                      {...register(`phNumbers.${index}.number` as const,{
-                        required:'value cannot be empty'}
-                      )} 
+                      {...register(`phNumbers.${index}.number` as const)} 
                     />
                     {errors.phNumbers?.[index]?.number && <p className='error'>{errors.phNumbers[index].number?.message}</p> }
                     {index > 0 && <button type='button' onClick={()=>remove(index)}> Remove </button>}
