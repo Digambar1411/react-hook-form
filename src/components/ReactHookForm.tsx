@@ -10,7 +10,9 @@ type SampleFormType = {
     city:string;
   }
   phoneNumbers:string[];
-  phNumbers:{number:''}[];
+  phNumbers:{
+    number:string
+  }[];
 }
 
 const ReactHookForm = () => {
