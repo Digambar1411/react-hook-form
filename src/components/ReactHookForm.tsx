@@ -188,6 +188,7 @@ const ReactHookForm = () => {
         <div className="section">
 					<label htmlFor="doj">Date of Joining</label>
 					<input type="date" id="doj" {...register("doj",{
+            // valueAsDate:true, //can set to true or false
             required:"Date of Joining is required",
           })} />
           {errors.doj && <p className='error'>{errors.doj.message}</p>}
