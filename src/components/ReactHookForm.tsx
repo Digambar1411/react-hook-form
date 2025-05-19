@@ -13,6 +13,9 @@ type SampleFormType = {
   phNumbers:{
     number:string
   }[];
+  age:number;
+  dob:Date;
+  doj:string
 }
 
 const ReactHookForm = () => {
@@ -31,7 +34,10 @@ const ReactHookForm = () => {
         city:''
       },
       phoneNumbers:['',''],
-      phNumbers:[{number:''}]
+      phNumbers:[{number:''}],
+      age:0,
+      dob:new Date(),
+      doj:''
     }});
 
   const {fields, append, remove} = useFieldArray({
@@ -113,7 +119,7 @@ const ReactHookForm = () => {
 						<p className="error">{errors.address.city?.message}</p>
 					)}
 				</div>
-        
+
 				<div className="section">
 					<label htmlFor="primary-phone">Primary Phone</label>
 					<input
@@ -159,6 +165,32 @@ const ReactHookForm = () => {
 							Add More
 						</button>
 					</div>
+				</div>
+
+        <div className="section">
+					<label htmlFor="age">Age</label>
+					<input type="number" id="age" {...register("age",{
+            valueAsNumber:true,
+            required:"age is required",
+          })} />
+          {errors.age && <p className='error'>{errors.age.message}</p>}
+				</div>
+
+        <div className="section">
+					<label htmlFor="dob">Date of Birth</label>
+					<input type="date" id="dob" {...register("dob",{
+            valueAsDate:true,
+            required:"dob is required",
+          })} />
+          {errors.dob && <p className='error'>{errors.dob.message}</p>}
+				</div>
+
+        <div className="section">
+					<label htmlFor="doj">Date of Joining</label>
+					<input type="date" id="doj" {...register("doj",{
+            required:"Date of Joining is required",
+          })} />
+          {errors.doj && <p className='error'>{errors.doj.message}</p>}
 				</div>
 
 				<button type="submit">Submit</button>
