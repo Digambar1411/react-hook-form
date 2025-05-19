@@ -123,7 +123,7 @@ const ReactHookForm = () => {
 				<div className="section">
 					<label htmlFor="primary-phone">Primary Phone</label>
 					<input
-						type="number"
+						type="text"
 						id="phone1"
 						{...register("phoneNumbers.0", {
 							required: "primary phone is required",
@@ -133,7 +133,7 @@ const ReactHookForm = () => {
 
 				<div className="section">
 					<label htmlFor="secondary-phone">Secondary Phone</label>
-					<input type="number" id="phone2" {...register("phoneNumbers.1")} />
+					<input type="text" id="phone2" {...register("phoneNumbers.1")} />
 				</div>
 
 				<div className="section">
