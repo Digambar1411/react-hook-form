@@ -1,5 +1,5 @@
 import { DevTool } from '@hookform/devtools';
-import {useForm} from 'react-hook-form';
+import {useFieldArray, useForm} from 'react-hook-form';
 
 type SampleFormType = {
   username:string;
@@ -10,6 +10,7 @@ type SampleFormType = {
     city:string;
   }
   phoneNumbers:string[];
+  phNumbers:{number:''}[];
 }
 
 const ReactHookForm = () => {
@@ -27,8 +28,14 @@ const ReactHookForm = () => {
         street:'',
         city:''
       },
-      phoneNumbers:['','']
+      phoneNumbers:['',''],
+      phNumbers:[{number:''}]
     }});
+
+  const {fields, append, remove} = useFieldArray({
+    name:'phNumbers',
+    control,
+  })
 
   const submitForm = (data: SampleFormType) => {
     console.log(data);
@@ -98,6 +105,28 @@ const ReactHookForm = () => {
           <div className='section'>
             <label htmlFor="secondary-phone" >Secondary Phone</label>
             <input type="number" id='phone2' {...register('phoneNumbers.1')}/>
+          </div>
+
+          <div className='section'>
+            <label htmlFor="phone-numbers">Phone Numbers</label>
+            <div>{
+              fields.map((field, index)=>{
+                return(
+                  <div key={field.id}>
+                    <input 
+                      type="text" 
+                      {...register(`phNumbers.${index}.number` as const,{
+                        required:'value cannot be empty'}
+                      )} 
+                    />
+                    {errors.phNumbers?.[index]?.number && <p className='error'>{errors.phNumbers[index].number?.message}</p> }
+                    {index > 0 && <button type='button' onClick={()=>remove(index)}> Remove </button>}
+                  </div>
+                )
+              })}
+
+              <button type='button' onClick={()=>append({number:''})}>Add More</button>
+            </div>
           </div>
         </div>
 
