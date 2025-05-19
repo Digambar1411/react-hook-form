@@ -1,6 +1,8 @@
 import { DevTool } from '@hookform/devtools';
 import { useFieldArray, useForm } from "react-hook-form";
 
+let render = 0;
+
 type SampleFormType = {
   username:string;
   email: string;
@@ -23,7 +25,8 @@ const ReactHookForm = () => {
     register, 
     control, 
     handleSubmit, 
-    formState:{errors} 
+    formState:{errors},
+    watch
   } = useForm<SampleFormType>({
     defaultValues:{
       username:'',
@@ -45,14 +48,19 @@ const ReactHookForm = () => {
     control,
   })
 
+  const watchedFields = watch('username');
+
   const submitForm = (data: SampleFormType) => {
     console.log(data);
   }
 
+  render++;
+
   return (
 		<>
 			<form onSubmit={handleSubmit(submitForm)} noValidate>
-				<h1>Reack Hook Form</h1>
+				<h1>Reack Hook Form, renderCount:({render / 2})</h1>
+        <p>username: {JSON.stringify(watchedFields)}</p>
 
 				<div className="section">
 					<label htmlFor="username">Username</label>
