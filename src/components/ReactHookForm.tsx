@@ -129,6 +129,7 @@ const ReactHookForm = () => {
 						id="street"
 						{...register("address.street", {
 							required: "street address is required",
+              disabled:watch('address.city') === ''
 						})}
 					/>
 					{errors.address?.street && (
