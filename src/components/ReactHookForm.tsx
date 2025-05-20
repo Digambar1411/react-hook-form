@@ -27,7 +27,9 @@ const ReactHookForm = () => {
     control, 
     handleSubmit, 
     formState:{errors},
-    watch
+    watch,
+    getValues,
+    setValue
   } = useForm<SampleFormType>({
     defaultValues:{
       username:'',
@@ -55,14 +57,22 @@ const ReactHookForm = () => {
     console.log(data);
   }
 
+  const getValuesHandler = () => {
+    console.log(getValues('username'));
+  }
+
+  const setValueHandler = () => {
+    setValue('username','admin');
+  }
+
   render++;
 
-  useEffect(()=>{
-    const subscription = watch((value) => {
-      console.log('username :',value);
-    });
-    return ()=>subscription.unsubscribe();
-  },[watch]);
+  // useEffect(()=>{
+  //   const subscription = watch((value) => {
+  //     console.log('username :',value);
+  //   });
+  //   return ()=>subscription.unsubscribe();
+  // },[watch]);
 
   return (
 		<>
@@ -212,6 +222,8 @@ const ReactHookForm = () => {
 				</div>
 
 				<button type="submit">Submit</button>
+        <button type='button' onClick={getValuesHandler}>get Values</button>
+        <button type='button' onClick={setValueHandler}>set Values</button>
 			</form>
 			<DevTool control={control} /> {/* Set up the dev tool */}
 		</>
