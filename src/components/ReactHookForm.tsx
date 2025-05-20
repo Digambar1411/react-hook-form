@@ -1,6 +1,6 @@
 import { DevTool } from '@hookform/devtools';
 import { useEffect } from 'react';
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, type FieldErrors , } from "react-hook-form";
 
 let render = 0;
 
@@ -31,6 +31,7 @@ const ReactHookForm = () => {
       touchedFields,
       dirtyFields,
       isDirty,
+      isValid
     },
     watch,
     getValues,
@@ -64,6 +65,10 @@ const ReactHookForm = () => {
     reset(); //clear fields post submit
   }
 
+  const onError = (erros:FieldErrors<SampleFormType>)=>{
+    console.log('onError:',erros);
+  }
+
   const getValuesHandler = () => {
     console.log(getValues('username'));
   }
@@ -78,9 +83,7 @@ const ReactHookForm = () => {
     : console.log('No unsaved changes form closed');
   }
 
-  console.log('touchedFields:', touchedFields);
-  console.log('dirtyFields:', dirtyFields);
-  console.log('isDirty:', isDirty);
+  console.log({touchedFields,dirtyFields,isDirty,isValid});
 
 
   render++;
@@ -94,7 +97,7 @@ const ReactHookForm = () => {
 
   return (
 		<>
-			<form onSubmit={handleSubmit(submitForm)} noValidate>
+			<form onSubmit={handleSubmit(submitForm, onError)} noValidate>
 				<h1>Reack Hook Form, renderCount:({render / 2})</h1>
         <button type="button"onClick={handleDiscard} >close form</button>
         <p>username: {JSON.stringify(watchedFields)}</p>
@@ -240,7 +243,7 @@ const ReactHookForm = () => {
           {errors.doj && <p className='error'>{errors.doj.message}</p>}
 				</div>
 
-				<button disabled={!isDirty} type="submit">Submit</button>
+				<button disabled={!isDirty  || !isValid} type="submit">Submit</button>
         <button type='button' onClick={getValuesHandler}>get Values</button>
         <button type='button' onClick={setValueHandler}>set Values</button>
 			</form>
