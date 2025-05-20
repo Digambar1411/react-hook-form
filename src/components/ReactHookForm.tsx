@@ -26,10 +26,16 @@ const ReactHookForm = () => {
     register, 
     control, 
     handleSubmit, 
-    formState:{errors},
+    formState:{
+      errors, 
+      touchedFields,
+      dirtyFields,
+      isDirty,
+    },
     watch,
     getValues,
-    setValue
+    setValue,
+    reset
   } = useForm<SampleFormType>({
     defaultValues:{
       username:'',
@@ -55,6 +61,7 @@ const ReactHookForm = () => {
 
   const submitForm = (data: SampleFormType) => {
     console.log(data);
+    reset(); //clear fields post submit
   }
 
   const getValuesHandler = () => {
@@ -64,6 +71,17 @@ const ReactHookForm = () => {
   const setValueHandler = () => {
     setValue('username','admin');
   }
+
+  const handleDiscard=()=>{
+    isDirty
+    ? alert('You have unsaved changes') 
+    : console.log('No unsaved changes form closed');
+  }
+
+  console.log('touchedFields:', touchedFields);
+  console.log('dirtyFields:', dirtyFields);
+  console.log('isDirty:', isDirty);
+
 
   render++;
 
@@ -78,6 +96,7 @@ const ReactHookForm = () => {
 		<>
 			<form onSubmit={handleSubmit(submitForm)} noValidate>
 				<h1>Reack Hook Form, renderCount:({render / 2})</h1>
+        <button type="button"onClick={handleDiscard} >close form</button>
         <p>username: {JSON.stringify(watchedFields)}</p>
 
 				<div className="section">
@@ -221,7 +240,7 @@ const ReactHookForm = () => {
           {errors.doj && <p className='error'>{errors.doj.message}</p>}
 				</div>
 
-				<button type="submit">Submit</button>
+				<button disabled={!isDirty} type="submit">Submit</button>
         <button type='button' onClick={getValuesHandler}>get Values</button>
         <button type='button' onClick={setValueHandler}>set Values</button>
 			</form>
