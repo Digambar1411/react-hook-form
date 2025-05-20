@@ -1,4 +1,5 @@
 import { DevTool } from '@hookform/devtools';
+import { useEffect } from 'react';
 import { useFieldArray, useForm } from "react-hook-form";
 
 let render = 0;
@@ -56,6 +57,13 @@ const ReactHookForm = () => {
 
   render++;
 
+  useEffect(()=>{
+    const subscription = watch((value) => {
+      console.log('username :',value);
+    });
+    return ()=>subscription.unsubscribe();
+  },[watch]);
+
   return (
 		<>
 			<form onSubmit={handleSubmit(submitForm)} noValidate>
@@ -102,6 +110,18 @@ const ReactHookForm = () => {
 					{errors.email && <p className="error">{errors.email?.message}</p>}
 				</div>
 
+        <div className="section">
+					<label htmlFor="city">City</label>
+					<input
+						type="text"
+						id="city"
+						{...register("address.city", { required: "city is required" })}
+					/>
+					{errors.address?.city && (
+						<p className="error">{errors.address.city?.message}</p>
+					)}
+				</div>
+
 				<div className="section">
 					<label htmlFor="street">Street</label>
 					<input
@@ -113,18 +133,6 @@ const ReactHookForm = () => {
 					/>
 					{errors.address?.street && (
 						<p className="error">{errors.address.street?.message}</p>
-					)}
-				</div>
-
-				<div className="section">
-					<label htmlFor="city">City</label>
-					<input
-						type="text"
-						id="city"
-						{...register("address.city", { required: "city is required" })}
-					/>
-					{errors.address?.city && (
-						<p className="error">{errors.address.city?.message}</p>
 					)}
 				</div>
 
