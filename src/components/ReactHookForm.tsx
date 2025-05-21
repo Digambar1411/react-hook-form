@@ -54,7 +54,9 @@ const ReactHookForm = () => {
       age:0,
       dob:new Date(),
       doj:''
-    }});
+    },
+    mode:'onBlur', //onBlur, onChange, onSubmit
+  });
 
   const {fields, append, remove} = useFieldArray({
     name:'phNumbers',
@@ -115,6 +117,10 @@ const ReactHookForm = () => {
 							validate: (value) =>
 								value !== "admin" || "This username is not allowed",
 							required: "username is required",
+              minLength:{
+                value:3,
+                message:'username must be at least 3 characters'
+              }
 						})}
 					/>
 					{errors.username && (
@@ -187,6 +193,9 @@ const ReactHookForm = () => {
 							required: "primary phone is required",
 						})}
 					/>
+          {errors?.phoneNumbers?.[0] && (
+						<p className="error">{errors.phoneNumbers[0].message}</p>
+					)}
 				</div>
 
 				<div className="section">
@@ -202,7 +211,7 @@ const ReactHookForm = () => {
 								<div key={field.id}>
 									<input
 										type="text"
-										{...register(`phNumbers.${index}.number` as const)}
+										{...register(`phNumbers.${index}.number` as const, {required:'number is required'})}
 									/>
 									{errors.phNumbers?.[index]?.number && (
 										<p className="error">
