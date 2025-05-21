@@ -1,10 +1,10 @@
 import './App.css'
-import ReactHookForm from './components/ReactHookForm'
+import ZodReactHookForm from './components/ZodReactHookForm'
 
 function App() {
 
   return (
-    <ReactHookForm />
+    <ZodReactHookForm />
   )
 }
 
