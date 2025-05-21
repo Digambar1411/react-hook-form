@@ -31,8 +31,11 @@ const ReactHookForm = () => {
       touchedFields,
       dirtyFields,
       isDirty,
-      isValid
-    },
+      isValid,
+      isSubmitted,
+      isSubmitting,
+      isSubmitSuccessful
+      },
     watch,
     getValues,
     setValue,
@@ -84,6 +87,7 @@ const ReactHookForm = () => {
   }
 
   console.log({touchedFields,dirtyFields,isDirty,isValid});
+  console.log({isSubmitted, isSubmitting, isSubmitSuccessful});
 
 
   render++;
