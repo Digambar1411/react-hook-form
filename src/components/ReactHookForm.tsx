@@ -138,7 +138,12 @@ const ReactHookForm = () => {
 								notBlockListedDomain: (value) =>
 									!value.endsWith("tcs.com") || "This domain is not allowed",
 								isSameOrg: (value) =>
-									value.endsWith("tcs-evms.com") || "Domain does not  match",
+									value.endsWith(".biz") || "Domain does not  match",
+                emailAvailable: async (value) =>{
+                  const res = await fetch(`https://jsonplaceholder.typicode.com/users?email=${value}`);
+                  const data = await res.json();
+                  return data.length === 0 || 'Email alreday exists'
+                }
 							},
 							required: "email is required",
 						})}
@@ -247,7 +252,7 @@ const ReactHookForm = () => {
           {errors.doj && <p className='error'>{errors.doj.message}</p>}
 				</div>
 
-				<button disabled={!isDirty  || !isValid} type="submit">Submit</button>
+				<button disabled={!isDirty } type="submit">Submit</button>
         <button type='button' onClick={getValuesHandler}>get Values</button>
         <button type='button' onClick={setValueHandler}>set Values</button>
 			</form>
