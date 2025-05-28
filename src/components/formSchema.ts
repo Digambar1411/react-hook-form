@@ -17,9 +17,6 @@ export const formSchema = z.object({
       street: z
         .string({ required_error: 'street is required' }),
     }),
-  phNumbers: z
-    .array(z
-      .object({ number: z.string({ required_error: 'number is required' }) })),
   age: z
     .number()
     .min(1, 'age is required')

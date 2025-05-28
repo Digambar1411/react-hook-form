@@ -1,5 +1,5 @@
 import { DevTool } from '@hookform/devtools';
-import { useFieldArray, useForm, type FieldErrors } from "react-hook-form";
+import { useForm, type FieldErrors } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema, type addFormSchemaType } from "./formSchema";
 
@@ -13,7 +13,6 @@ const getDefaultValues = () => {
 			street: "",
 			city: "",
 		},
-		phNumbers: [{ number: "" }],
 		age: 0,
 		dob: new Date(),
 		resourceType: undefined,
@@ -37,11 +36,6 @@ const ZodReactHookForm = () => {
 		reset,
 		formState: { isDirty, errors },
 	} = useformReturn;
-
-	const { fields, append, remove } = useFieldArray({
-		name: "phNumbers",
-		control,
-	});
 
 	const watchedFields = watch("username");
 
@@ -114,44 +108,13 @@ const ZodReactHookForm = () => {
 					<input
 						type="text"
 						id="street"
-						{...register("address.street", {
-							disabled: watch("address.city") === "",
+						{...register("address.street",{
+							disabled: watch("address.city") === ""
 						})}
 					/>
 					{errors.address?.street && (
 						<p className="error">{errors.address.street?.message}</p>
 					)}
-				</div>
-
-				<div className="section">
-					<label htmlFor="phone-numbers">Other Phone Numbers</label>
-					<div>
-						{fields.map((field, index) => {
-							return (
-								<div key={field.id}>
-									<input
-										type="text"
-										{...register(`phNumbers.${index}.number` as const)}
-									/>
-									{errors.phNumbers?.[index]?.number && (
-										<p className="error">
-											{errors.phNumbers[index].number?.message}
-										</p>
-									)}
-									{index > 0 && (
-										<button type="button" onClick={() => remove(index)}>
-											{" "}
-											Remove{" "}
-										</button>
-									)}
-								</div>
-							);
-						})}
-
-						<button type="button" onClick={() => append({ number: "" })}>
-							Add More
-						</button>
-					</div>
 				</div>
 
 				<div className="section">
